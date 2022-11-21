@@ -43,6 +43,7 @@ class Book(models.Model):
     price = models.DecimalField('Price', max_digits=5, decimal_places=2)
     quantity = models.IntegerField('Quantity', help_text='Enter amount in stock.')
     genre = models.ForeignKey(Genre, help_text='Select Genre', on_delete=models.SET_NULL, null=True)
+    book_image = models.ImageField(null=True)
 
 
     def get_absolute_url(self):
