@@ -36,7 +36,7 @@ class Author(models.Model):
 Book model: This model represents an book(Not an instance of a book)
 """
 class Book(models.Model):
-    title = models.CharField(max_length=200, help_text='Enter book title')
+    title = models.CharField(max_length=3000, help_text='Enter book title')
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
     synopsis = models.TextField(max_length=3000, help_text='A summary of the book content.')
     isbn = models.CharField('ISBN', max_length=20, unique=True, help_text='13-digit ISBN')
