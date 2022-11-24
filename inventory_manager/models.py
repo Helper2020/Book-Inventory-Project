@@ -36,13 +36,14 @@ class Author(models.Model):
 Book model: This model represents an book(Not an instance of a book)
 """
 class Book(models.Model):
-    title = models.CharField(max_length=200, help_text='Enter book title')
+    title = models.CharField(max_length=3000, help_text='Enter book title')
     author = models.ForeignKey(Author, on_delete=models.SET_NULL, null=True)
     synopsis = models.TextField(max_length=3000, help_text='A summary of the book content.')
-    isbn = models.CharField('ISBN', max_length=13, unique=True, help_text='13-digit ISBN')
+    isbn = models.CharField('ISBN', max_length=20, unique=True, help_text='13-digit ISBN')
     price = models.DecimalField('Price', max_digits=5, decimal_places=2)
     quantity = models.IntegerField('Quantity', help_text='Enter amount in stock.')
     genre = models.ForeignKey(Genre, help_text='Select Genre', on_delete=models.SET_NULL, null=True)
+    book_image = models.ImageField(null=True, upload_to='images/')
 
 
     def get_absolute_url(self):
