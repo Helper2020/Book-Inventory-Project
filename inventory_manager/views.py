@@ -14,4 +14,4 @@ def index(request):
         'num_genres': num_genres
     }
     
-    return render(request, 'book_manager/index.html', context=info)
+    return render(request, 'index.html', context=info)
