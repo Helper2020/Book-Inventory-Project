@@ -1,0 +1,12 @@
+{% extends 'inventory_manager/base.html' %}
+
+{% block content %}
+    <h1>Title: {{ book.title }}</h1>
+    <p><strong>Author:</strong> <a href="{% url 'author-info' book.author.pk %}">{{ book.author }}</a></p> 
+    <p><strong>Synopsis:</strong> {{ book.synopsis }}</p>
+    <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+    <p><strong>Genre:</strong> {{ book.genre}}</p>
+    <p><strong>Price:</strong> {{ book.price }}</p>
+    <p><strong>Quantity:</strong> {{ book.quantity }}</p>
+
+{% endblock %}
