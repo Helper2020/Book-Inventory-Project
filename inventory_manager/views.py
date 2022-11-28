@@ -20,6 +20,7 @@ def index(request):
 
 class BookCatalog(generic.ListView):
     model = Book
+    paginate_by = 20
     context_object_name = 'book_catalog'
     template_name = 'inventory_manager/bookcatalog.html'
 
@@ -33,6 +34,7 @@ class BookInfo(generic.DetailView):
 
 class AuthorCatalog(generic.ListView):
     model = Author
+    paginate_by = 20
     context_object_name = 'author_catalog'
     template_name = 'inventory_manager/authorcatalog.html'
     
