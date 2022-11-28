@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .models import Book, Author, SupportTicket, Genre
 from django.views import generic
-from django.views.generic import ListView, UpdateView
+
 
 # Create your views here.
 
@@ -18,7 +18,7 @@ def index(request):
     
     return render(request, 'inventory_manager/index.html', context=info)
 
-class BookCatalog(ListView):
+class BookCatalog(generic.ListView):
     model = Book
     context_object_name = 'book_catalog'
     template_name = 'inventory_manager/bookcatalog.html'
@@ -30,3 +30,15 @@ class BookCatalog(ListView):
 class BookInfo(generic.DetailView):
     model = Book
     template_name = 'inventory_manager/bookinfo.html'
+
+class AuthorCatalog(generic.ListView):
+    model = Author
+    context_object_name = 'author_catalog'
+    template_name = 'inventory_manager/authorcatalog.html'
+    
+    def get_queryset(self):
+        return Author.objects.order_by('last_name')
+
+class AuthorInfo(generic.DetailView):
+    model = Author
+    template_name = 'inventory_manager/authorinfo.html'
