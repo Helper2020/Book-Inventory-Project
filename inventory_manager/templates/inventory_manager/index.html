@@ -3,10 +3,28 @@
 {% block content %}
     <h2>Book Inventory Management System</h2>
     <p>
+        {% if user.is_authenticated %}
         To add or modify books click on book management link. <br>
         To add or modify author info click on author management link. <br>
-        To contact tech support click on contact link. <br>
+        To contact tech support click on contact link. <br> 
+        {% endif %}
+        To search for author, use author search. <br>
     </p>
+    <form action="{% url 'basic-author-results' %}" method="get">
+        <label for="search">Use search for author information<br>
+            <div>
+                <label for="firstname">Enter first name of author: </label>
+                <input type="text" name="firstname" id="firstname" required>
+            </div>
+            <div>
+                <label for="lastname">Enter last name of author: </label>
+                <input type="text" name="lastname" id="lastname" required>
+            </div>
+            <div>
+                <input type="submit" value="Search">
+            </div>
+    </form>
+    <br>
     <h3>Total authors and books</h3>
     <ul>
         <li><strong>Books:</strong> {{ num_books }}</li>
@@ -17,4 +35,6 @@
         <li><a href="{% url 'book-catalog' %}" >Book Catalog</a></li>
         <li><a href="{% url 'author-catalog' %}">Author Catalog</a></li>
     </ul>
+
 {% endblock %}
+
