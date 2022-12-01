@@ -55,3 +55,12 @@ class BasicAuthorResultsView(generic.ListView):
         object_list = Author.objects.filter(first_name__icontains=first_name, last_name__icontains=last_name)
        
         return object_list
+
+class BasicBookResultsView(generic.ListView):
+    model = Book
+    template_name = 'inventory_manager/basicsearchbookresults.html'
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Book.objects.filter(title__icontains=query)
+        return object_list
