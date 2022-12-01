@@ -8,4 +8,5 @@ urlpatterns = [
      path('author_catalog/', views.AuthorCatalog.as_view(), name='author-catalog'),
      path('author_catalog/<int:pk>', views.AuthorInfo.as_view(), name='author-info'),
      path('basic-author-results', views.BasicAuthorResultsView.as_view(), name='basic-author-results'),
+     path('basic-book-results', views.BasicBookResultsView.as_view(), name='basic-book-results'),
 ]
