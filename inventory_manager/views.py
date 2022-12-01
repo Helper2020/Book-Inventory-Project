@@ -44,3 +44,14 @@ class AuthorCatalog(generic.ListView):
 class AuthorInfo(generic.DetailView):
     model = Author
     template_name = 'inventory_manager/authorinfo.html'
+
+class BasicAuthorResultsView(generic.ListView):
+    model = Author
+    template_name = 'inventory_manager/basicsearchauthorresults.html'
+    
+    def get_queryset(self):
+        first_name = self.request.GET.get('firstname')
+        last_name = self.request.GET.get('lastname')
+        object_list = Author.objects.filter(first_name__icontains=first_name, last_name__icontains=last_name)
+       
+        return object_list
