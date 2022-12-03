@@ -11,6 +11,10 @@ urlpatterns = [
      path('author_management/create-author', views.create_author, name='create-author'),
      path('author_management/author-results', views.SearchAuthorResultsView.as_view(), name='author-results'),
      path('author_management/update-author/<int:pk>', views.UpdateAuthor.as_view(), name='update-author'),
+     path('book_management/', views.book_management, name='book-management'),
+     path('book_management/search-results', views.SearchBooksResultsView.as_view(), name='book-results'),
+     path('book_management/create-book', views.create_book, name='create-book'),
+     path('book_management/update-book/<int:pk>', views.UpdateBook.as_view(), name='update-book'),
      path('basic-author-results', views.BasicAuthorResultsView.as_view(), name='basic-author-results'),
      path('basic-book-results', views.BasicBookResultsView.as_view(), name='basic-book-results'),
 ]
