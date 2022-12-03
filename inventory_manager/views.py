@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Book, Author, SupportTicket, Genre
 from django.views import generic
+from django.contrib import messages
+from inventory_manager.forms import CreateAuthor
 
 
 # Create your views here.
@@ -32,6 +35,10 @@ class BookInfo(generic.DetailView):
     model = Book
     template_name = 'inventory_manager/bookinfo.html'
 
+
+def author_management(request):
+    return render(request, 'inventory_manager/author_management.html')
+
 class AuthorCatalog(generic.ListView):
     model = Author
     paginate_by = 20
@@ -44,6 +51,36 @@ class AuthorCatalog(generic.ListView):
 class AuthorInfo(generic.DetailView):
     model = Author
     template_name = 'inventory_manager/authorinfo.html'
+
+class UpdateAuthor(generic.UpdateView):
+    model = Author
+    fields = '__all__'
+    template_name = 'inventory_manager/updateauthor.html'
+
+def create_author(request):
+    
+    form = CreateAuthor(request.POST or None)
+    if form.is_valid():
+        form.save()
+
+        messages.success(request, 'The author has been added.')
+        return redirect('create-author')
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'inventory_manager/createauthor.html', context=context)
+
+class SearchAuthorResultsView(generic.ListView):
+    model = Author
+    template_name = 'inventory_manager/searchauthorresults.html'
+    
+    def get_queryset(self):
+        first_name = self.request.GET.get('firstname')
+        last_name = self.request.GET.get('lastname')
+        object_list = Author.objects.filter(first_name__icontains=first_name, last_name__icontains=last_name)
+        return object_list
 
 class BasicAuthorResultsView(generic.ListView):
     model = Author
