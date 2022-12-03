@@ -1,9 +1,14 @@
-from django.shortcuts import render
+
 from django.shortcuts import render, redirect
-from .models import Book, Author, SupportTicket, Genre
-from django.views import generic
+from django.core.mail import send_mail,BadHeaderError
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
-from inventory_manager.forms import CreateAuthor, CreateBook
+from django.views import generic
+from django.views.generic import ListView, UpdateView
+from .models import Book, Author, Genre, SupportTicket
+from inventory_manager.forms import CreateAuthor, CreateBook, ContactForm
+from django.conf import settings
+
 
 
 # Create your views here.
@@ -114,6 +119,31 @@ class SearchAuthorResultsView(generic.ListView):
         last_name = self.request.GET.get('lastname')
         object_list = Author.objects.filter(first_name__icontains=first_name, last_name__icontains=last_name)
         return object_list
+
+
+class ContactView(generic.DetailView):
+    model = SupportTicket
+    template_name = 'inventory_manager/contact.html'
+
+def contact(request):
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            topic = form.cleaned_data['topic']
+            from_email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            form.save()
+            try:
+                send_mail(topic, message, from_email, ['starcraft2020@gmail.com'], fail_silently=False)
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+                
+            messages.success(request, 'Your question has been submitted!')    
+            return redirect('contact')
+    return render(request, "inventory_manager/contact.html", {'form': form})
+
 
 class BasicAuthorResultsView(generic.ListView):
     model = Author
