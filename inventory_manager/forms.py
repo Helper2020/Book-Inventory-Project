@@ -13,3 +13,22 @@ class CreateAuthor(forms.ModelForm):
             'first_name': _('Required'),
             'last_name': _('Required'),
         }
+
+
+class CreateBook(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = '__all__'
+
+    
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = SupportTicket
+        fields = '__all__'
+
+        help_texts = {
+            'email': _('Required'),
+            'topic': _('Required'),
+            'message': _('Required')
+        }

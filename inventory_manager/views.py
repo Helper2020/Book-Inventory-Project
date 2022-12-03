@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .models import Book, Author, SupportTicket, Genre
 from django.views import generic
 from django.contrib import messages
-from inventory_manager.forms import CreateAuthor
+from inventory_manager.forms import CreateAuthor, CreateBook
 
 
 # Create your views here.
@@ -71,6 +71,39 @@ def create_author(request):
     }
 
     return render(request, 'inventory_manager/createauthor.html', context=context)
+
+def book_management(request):
+    return render(request, 'inventory_manager/book_management.html')
+
+
+def create_book(request):
+    form = CreateBook(request.POST, request.FILES)
+
+    if form.is_valid():
+        form.save()
+        messages.success(request, 'The book has been added.')
+        return redirect('create-book')
+
+    context = {
+        'form': form
+    }
+    
+
+    return render(request, 'inventory_manager/createbook.html', context=context)
+
+class UpdateBook(generic.UpdateView):
+    model = Book
+    fields = '__all__'
+    template_name = 'inventory_manager/updatebook.html'
+
+class SearchBooksResultsView(generic.ListView):
+    model = Book
+    template_name = 'inventory_manager/searchbookresults.html'
+    
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        object_list = Book.objects.filter(title__icontains=query)
+        return object_list
 
 class SearchAuthorResultsView(generic.ListView):
     model = Author
