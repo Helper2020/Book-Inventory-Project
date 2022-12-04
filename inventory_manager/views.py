@@ -145,6 +145,13 @@ def contact(request):
     return render(request, "inventory_manager/contact.html", {'form': form})
 
 
+def error_404_handler(request, exception):
+    return render(request, 'inventory_manager/404.html')
+
+def error_500_handler(request):
+    return render(request, 'inventory_manager/500.html')
+
+
 class BasicAuthorResultsView(generic.ListView):
     model = Author
     template_name = 'inventory_manager/basicsearchauthorresults.html'

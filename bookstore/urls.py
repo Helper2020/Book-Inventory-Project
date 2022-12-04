@@ -19,6 +19,7 @@ from django.urls import include
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
+from django.conf.urls import handler404, handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,6 +27,10 @@ urlpatterns = [
     path('', RedirectView.as_view(url='inventory_manager', permanent=True)),
     path('accounts/', include('django.contrib.auth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+handler404 = 'inventory_manager.views.error_404_handler'
+handler500 = 'inventory_manager.views.error_500_handler'
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,
