@@ -4,7 +4,7 @@ from django.core.mail import send_mail,BadHeaderError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.views import generic
-from django.views.generic import ListView, UpdateView
+from django.contrib.auth import logout
 from .models import Book, Author, Genre, SupportTicket
 from inventory_manager.forms import CreateAuthor, CreateBook, ContactForm
 from django.conf import settings
@@ -143,6 +143,11 @@ def contact(request):
             messages.success(request, 'Your question has been submitted!')    
             return redirect('contact')
     return render(request, "inventory_manager/contact.html", {'form': form})
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, ("You are logged out."))
+    return redirect('logged_out.html')
 
 
 def error_404_handler(request, exception):

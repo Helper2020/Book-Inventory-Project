@@ -17,5 +17,6 @@ urlpatterns = [
      path('book_management/update-book/<int:pk>', views.UpdateBook.as_view(), name='update-book'),
      path('basic-author-results', views.BasicAuthorResultsView.as_view(), name='basic-author-results'),
      path('basic-book-results', views.BasicBookResultsView.as_view(), name='basic-book-results'),
-     path('contact/', views.contact, name='contact')
+     path('contact/', views.contact, name='contact'),
+     path('logout_user',views.logout_user, name="logout"),
 ]
