@@ -1,18 +1,17 @@
 
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail,BadHeaderError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse
 from django.contrib import messages
 from django.views import generic
-from django.views.generic import ListView, UpdateView
+from django.contrib.auth import logout
 from .models import Book, Author, Genre, SupportTicket
 from inventory_manager.forms import CreateAuthor, CreateBook, ContactForm
 from django.conf import settings
-
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-
 def index(request):
     num_books = Book.objects.all().count()
     num_genres = Genre.objects.all().count()
@@ -40,7 +39,7 @@ class BookInfo(generic.DetailView):
     model = Book
     template_name = 'inventory_manager/bookinfo.html'
 
-
+@login_required
 def author_management(request):
     return render(request, 'inventory_manager/author_management.html')
 
@@ -77,6 +76,7 @@ def create_author(request):
 
     return render(request, 'inventory_manager/createauthor.html', context=context)
 
+@login_required
 def book_management(request):
     return render(request, 'inventory_manager/book_management.html')
 
@@ -92,7 +92,6 @@ def create_book(request):
     context = {
         'form': form
     }
-    
 
     return render(request, 'inventory_manager/createbook.html', context=context)
 
@@ -143,6 +142,11 @@ def contact(request):
             messages.success(request, 'Your question has been submitted!')    
             return redirect('contact')
     return render(request, "inventory_manager/contact.html", {'form': form})
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, ("You are logged out."))
+    return redirect('logged_out.html')
 
 
 def error_404_handler(request, exception):
