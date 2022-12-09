@@ -37,7 +37,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['Book-Inventory-Project-dev.us-east-1.elasticbeanstalk.com', '127.0.0.1', '*']
+ALLOWED_HOSTS = ['Book-Inventory-Project-dev.us-east-1.elasticbeanstalk.com', '127.0.0.1', '172.31.92.211']
 
 
 
