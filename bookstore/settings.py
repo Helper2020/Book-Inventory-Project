@@ -128,18 +128,27 @@ TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
-USE_TZ = True
+USE_TZ = True 
 
 
-# Static files (CSS, JavaScript, Images)
+# Static files (CSS, JavaScript, Images) not templates or python
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = 'static/'
+
+# All files will be collected here to serve in production
+STATIC_ROOT = BASE_DIR / "staticfiles"
+# Used to server static files
+STATIC_URL = "/static/"
+# makes aware where static files are stored. Default will look in app folder
+# Here it will look everywhere else
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# uploaded files
+# Path where media is stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # Base url to serve media files
 MEDIA_URL = '/media/'
 
-# Path where media is stored
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
