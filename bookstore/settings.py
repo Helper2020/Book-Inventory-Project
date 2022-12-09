@@ -91,6 +91,17 @@ WSGI_APPLICATION = 'bookstore.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'o5LBqz6p',
+        'HOST': 'database-1.cju5lubqrwem.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
+    }
+}
+'''
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env("DB_NAME"),
         'USER': env("DB_USER"),
         'PASSWORD': env("DB_PASSWORD"),
@@ -98,6 +109,7 @@ DATABASES = {
         'PORT': env("DB_PORT"),
     }
 }
+'''
 
 
 # Password validation
